@@ -2,7 +2,7 @@ import { createContext, useReducer } from 'react'
 
  import Cookies from 'js-cookie'
 
-// export const Store = createContext()
+export const CartContext = createContext()
 
 const initialState = {
   cart: Cookies.get('cart')
@@ -66,10 +66,10 @@ function reducer(state, action) {
   }
 }
 
-export function StoreProvider({ children }) {
+export function CartContextProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const value = { state, dispatch }
 
-  return <Store.Provider value={value}>{children}</Store.Provider>
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }

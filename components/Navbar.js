@@ -4,10 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useContext } from "react"; 
-import{CartContex}from '../context/Cart'
+import{CartContext}from '../context/Cart'
 
 export default function Navbar() {
-  const{state,dispatch}= useContext(CartContex)
+  const{state,dispatch}= useContext(CartContext)
   const{cart}=state
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,9 +23,9 @@ export default function Navbar() {
         <div className="hidden md:flex space-x-6">
           <Link href="/cart" className="p-2 text-gray-700 hover:text-gray-500 transition">
             Cart
-            {cart.cartItems.lenght>0 &&(
+            {cart.cartItems.lengh>0 &&(
               <span className="ml-1 rounded-xl bg-gray-200 px-2 py-1 text-xs font-bold">
-                {cart.cartItems.reducer((acc,cur)=>acc+cur.qyt,0)}
+                {cart.cartItems.reduce((acc,cur)=>acc+cur.qty,0)}
               </span>
             )
             

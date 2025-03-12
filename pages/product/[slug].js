@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
-import ProductItems from "../../data/Products.js";
+import ProductItems from "../../data/Products.json";
 import Product from "@/components/Product";
 function ProductPage() {
   const { query } = useRouter();

@@ -1,30 +1,50 @@
 import Link from "next/link";
 import { useContext } from "react";
-import ProductItems from '../data/Products.js'
 import{CartContext} from '../context/Cart'
 
 
-const { state, dispatch } = useContext(CartContext);
 function Product({ item }) {
+  const { state, dispatch } = useContext(CartContext);
+
+  function addToCartHandler(){
+    
+   const existingItem= state.cart.cartItems.find(
+    (cartItem)=>cartItem.slug===item.slug)
 
 
- const { query } = useRouter();
-  const { slug } = query;
+    const qty = existingItem ? existingItem.qty + 1 : 1
 
-  const product = ProductItems.find((pItem) => pItem.slug === slug);
-  if (!product) {
-    return <div>product not found</div>;
+    if (item.count < qty) {
+      alert('Product is out.')
+
+      return
+    }
+
+    dispatch({ type: 'ADD_TO_CART', payload: { ...item, qty } })
+
+    router.push('/cart')
   }
 
+  // function addToCartHandler() {
+  //   const existingItem = state.cart.cartItems.find(
+  //     (item) => item.slug === product.slug
+  //   )
 
-  function addTocartHander(){
-   const existingItem= state.cart.cartItems.find((item)=>item.slug===product.slug)
+  //   const qty = existingItem ? existingItem.qty + 1 : 1
 
-const qty=existingItem? existingItem.qty+1:1
+  //   if (product.count < qty) {
+  //     alert('Product is out.')
 
-dispatch({type:'ADD_TO_CART',payload:{...product,qty}})
+  //     return
+  //   }
 
-  }
+  //   dispatch({ type: 'ADD_TO_CART', payload: { ...product, qty } })
+
+  //   router.push('/cart')
+  // }
+
+  
+
   return (
     <div className="max-w-sm bg-gray-100 text-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-300">
       <Link href={`/product/${item.slug}`}>
@@ -43,7 +63,7 @@ dispatch({type:'ADD_TO_CART',payload:{...product,qty}})
           ${item.price}
         </p>
         <div className="mb-2 font-bold ">{item.count > 0 ? "Available" : "unavailable"}</div>
-        <button onClick={addTocartHander} className="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300">
+        <button onClick={addToCartHandler} className="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300">
           Add to Cart
         </button>
       </div>

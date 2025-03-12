@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import Product from "@/components/Product";
-import ProductItems from "../data/Products.js";
+ import ProductItems from "../data/Products.json";
 
 export default function Home() {
   return (
