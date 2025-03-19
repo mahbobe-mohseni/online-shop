@@ -1,49 +1,33 @@
 import Link from "next/link";
 import { useContext } from "react";
-import{CartContext} from '../context/Cart'
+import { CartContext } from "../context/Cart";
+import { useRouter } from "next/router";
 
-
-function Product({ item }) {
+function Product({ item, hasRedirect = false }) {
   const { state, dispatch } = useContext(CartContext);
+  const router = useRouter();
 
-  function addToCartHandler(){
-    
-   const existingItem= state.cart.cartItems.find(
-    (cartItem)=>cartItem.slug===item.slug)
+  function addToCartHandler() {
+    const existingItem = state.cart.cartItems.find(
+      (cartItem) => cartItem.slug === item.slug
+    );
 
-
-    const qty = existingItem ? existingItem.qty + 1 : 1
+    const qty = existingItem ? existingItem.qty + 1 : 1;
 
     if (item.count < qty) {
-      alert('Product is out.')
+      alert("Product is out.");
 
-      return
+      return;
     }
 
-    dispatch({ type: 'ADD_TO_CART', payload: { ...item, qty } })
-
+    dispatch({ type: "ADD_TO_CART", payload: { ...item, qty } });
     router.push('/cart')
+    if (hasRedirect) {
+      router.push("/cart");
+    }
   }
 
-  // function addToCartHandler() {
-  //   const existingItem = state.cart.cartItems.find(
-  //     (item) => item.slug === product.slug
-  //   )
-
-  //   const qty = existingItem ? existingItem.qty + 1 : 1
-
-  //   if (product.count < qty) {
-  //     alert('Product is out.')
-
-  //     return
-  //   }
-
-  //   dispatch({ type: 'ADD_TO_CART', payload: { ...product, qty } })
-
-  //   router.push('/cart')
-  // }
-
-  
+ 
 
   return (
     <div className="max-w-sm bg-gray-100 text-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-300">
@@ -62,8 +46,13 @@ function Product({ item }) {
         <p className="text-lg font-semibold text-gray-700 mb-4">
           ${item.price}
         </p>
-        <div className="mb-2 font-bold ">{item.count > 0 ? "Available" : "unavailable"}</div>
-        <button onClick={addToCartHandler} className="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300">
+        <div className="mb-2 font-bold ">
+          {item.count > 0 ? "Available" : "unavailable"}
+        </div>
+        <button
+          onClick={addToCartHandler}
+          className="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300"
+        >
           Add to Cart
         </button>
       </div>

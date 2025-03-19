@@ -1,37 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { useContext } from "react"; 
-import{CartContext}from '../context/Cart'
+import { useContext } from "react";
+import { CartContext } from "../context/Cart";
 
 export default function Navbar() {
-  const{state,dispatch}= useContext(CartContext)
-  const{cart}=state
+  const { state, dispatch } = useContext(CartContext);
+  const { cart } = state;
+  const { cartItems } = cart;
   const [isOpen, setIsOpen] = useState(false);
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    
+
+      setItems(cartItems);
+  }, [cartItems]);
 
   return (
     <header className="bg-gray-100 text-gray-900 shadow-lg border-b border-gray-300">
       <nav className="flex h-14 px-8 justify-between items-center">
         {/* Logo */}
-        <Link href="/" className="text-lg font-bold text-gray-900 hover:text-gray-600 transition">
+        <Link
+          href="/"
+          className="text-lg font-bold text-gray-900 hover:text-gray-600 transition"
+        >
           Shopping
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-6">
-          <Link href="/cart" className="p-2 text-gray-700 hover:text-gray-500 transition">
+          <Link
+            href="/cart"
+            className="p-2 text-gray-700 hover:text-gray-500 transition"
+          >
             Cart
-            {cart.cartItems.lengh>0 &&(
+            {items.length > 0 && (
               <span className="ml-1 rounded-xl bg-gray-200 px-2 py-1 text-xs font-bold">
-                {cart.cartItems.reduce((acc,cur)=>acc+cur.qty,0)}
+                {items.reduce((acc, cur) => acc + cur.qty, 0)}
               </span>
-            )
-            
-            }
+            )}
           </Link>
-          <Link href="/login" className="p-2 text-gray-700 hover:text-gray-500 transition">
+          <Link
+            href="/login"
+            className="p-2 text-gray-700 hover:text-gray-500 transition"
+          >
             Login
           </Link>
         </div>
@@ -42,17 +56,27 @@ export default function Navbar() {
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
-          {isOpen ? <X size={28} className="text-gray-900" /> : <Menu size={28} className="text-gray-900" />}
+          {isOpen ? (
+            <X size={28} className="text-gray-900" />
+          ) : (
+            <Menu size={28} className="text-gray-900" />
+          )}
         </button>
       </nav>
 
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-gray-200 text-center p-4 space-y-4 border-t border-gray-300">
-          <Link href="/cart" className="block text-gray-700 hover:text-gray-500 transition">
+          <Link
+            href="/cart"
+            className="block text-gray-700 hover:text-gray-500 transition"
+          >
             Cart
           </Link>
-          <Link href="/login" className="block text-gray-700 hover:text-gray-500 transition">
+          <Link
+            href="/login"
+            className="block text-gray-700 hover:text-gray-500 transition"
+          >
             Login
           </Link>
         </div>

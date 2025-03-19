@@ -13,9 +13,8 @@ function ProductPage() {
 
   return (
     <Layout title={product.title}>
-       <Product item={product} /> 
-
-      </Layout>
+      <Product item={product} hasRedirect={true} />
+    </Layout>
   );
 }
 export default ProductPage;
