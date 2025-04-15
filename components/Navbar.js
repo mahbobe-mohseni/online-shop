@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect,useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useContext } from "react";
@@ -9,6 +9,7 @@ import { CartContext } from "../context/Cart";
 export default function Navbar() {
   const { state, dispatch } = useContext(CartContext);
   const { cart } = state;
+  // const [cartItemsCount,setCartItemsCount]= useState(0)
   const { cartItems } = cart;
   const [isOpen, setIsOpen] = useState(false);
   const [items, setItems] = useState([]);
@@ -37,13 +38,15 @@ export default function Navbar() {
           >
             Cart
             {items.length > 0 && (
-              <span className="ml-1 rounded-xl bg-gray-200 px-2 py-1 text-xs font-bold">
-                {items.reduce((acc, cur) => acc + cur.qty, 0)}
+             
+             <span className="ml-1 rounded-xl bg-gray-200 px-2 py-1 text-xs font-bold">
+                             {items.reduce((acc, cur) => acc + cur.qty, 0)}
+
               </span>
             )}
           </Link>
           <Link
-            href="/login"
+            href="/Login"
             className="p-2 text-gray-700 hover:text-gray-500 transition"
           >
             Login

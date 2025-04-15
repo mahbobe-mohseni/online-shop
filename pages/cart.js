@@ -1,70 +1,8 @@
-// import Image from "next/image";
-// import { useContext } from "react";
-// import { CartContext } from "../context/Cart";
-
-// import Layout from "@/components/Layout";
-
-// function CartPage() {
-//   const { state, dispatch } = useContext(CartContext);
-//   const {
-//     cart: { cartItems },
-//   } = state;
-//   function removeItemHandler(item) {
-//     dispatch({ type: "REMOVE_ITEM", payload: item });
-//   }
-
-//   return (
-//     <Layout title="shopping Cart">
-//       <h1 className="mb-4 text-xl">shopping cart</h1>
-//       {cartItems.length === 0 ? (
-//         <div>cart is empty.</div>
-//       ) : (
-//         <div className="grid md:grid-cols-4 md:gap-5">
-//           <div className="overflow-x-auto md:col-span-3 ">
-//             <table className="min-w-full">
-//               <thead className="border-b">
-//                 <tr>
-//                   <th className="px-5 text-left">item</th>
-//                   <th className="p-5 text-right">quantity</th>
-//                   <th className="p-5 text-right">price</th>
-//                   <th className="p-5">Action</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {cartItems.map((item) => (
-//                   <tr key={item.slug} className="border-b">
-//                     <td>
-//                       <span className="flex items-center">
-//                         <Image src={item.image} width={50} height={50} />
-//                         {item.title}
-//                       </span>
-//                     </td>
-//                     <td className="p-5 text-right">{item.qty}</td>
-//                     <td className="p-5 text-right">{item.price}</td>
-//                     <td className="p-5 text-center">
-//                       {" "}
-//                       <button onClick={() => removeItemHandler(item)}>
-//                         Remove
-//                       </button>
-//                     </td>
-//                   </tr>
-//                 ))}
-//               </tbody>
-//             </table>
-//           </div>
-//           <div className="p-5">
-//             <div className="pb-5">
-//               Total price:{''}{cartItems.reduce((acc,cur)=>acc+cur.qty*cur.price,0)}
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </Layout>
-//   );
-// }
-// export default CartPage;
+ 
 import Image from "next/image";
+import Router from "next/router";
 import { useContext } from "react";
+import dynamic from "next/dynamic";
 import { CartContext } from "../context/Cart";
 import Layout from "@/components/Layout";
 
@@ -74,7 +12,7 @@ function CartPage() {
     cart: { cartItems },
   } = state;
 
-  function removeItemHandler(item) {
+   function removeItemHandler(item) {
     dispatch({ type: "REMOVE_ITEM", payload: item });
   }
 
@@ -118,7 +56,7 @@ function CartPage() {
             <p className="text-gray-600 text-md">
               Total Price: <span className="font-semibold">${cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0)}</span>
             </p>
-            <button className="mt-4 w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+            <button className="mt-4 w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition" onClick={()=>rouer.push('login?redirect=/shipping')}>
               Proceed to Checkout
             </button>
           </div>
@@ -128,5 +66,5 @@ function CartPage() {
   );
 }
 
-export default CartPage;
+export default  dynamic(()=>Promise.resolve(CartPage),{ssr:false });
 
