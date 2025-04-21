@@ -1,6 +1,6 @@
 import db from '../../utils/db'
 import users from '../../data/users'
-import User from '../../models/user'
+import User from '../../models/User'
 
 async function handler(req, res) {
   await db.connect()

@@ -1,8 +1,10 @@
+
+import bcrypt from 'bcryptjs'
 const users = [
     {
       name: 'admin',
       email: 'admin@frontcast.ir',
-      password: '123456',
+      password:bcrypt.hashSync ('123456'),
       isAdmin: true,
     },
     {
@@ -14,7 +16,7 @@ const users = [
     {
       name: 'User 2',
       email: 'user2@frontcast.ir',
-      password: '123456',
+      password:bcrypt.hashSync ('123456'),
       isAdmin: false,
     },
   ]

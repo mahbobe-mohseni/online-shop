@@ -1,6 +1,6 @@
  
 import Image from "next/image";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useContext } from "react";
 import dynamic from "next/dynamic";
 import { CartContext } from "../context/Cart";
@@ -11,6 +11,8 @@ function CartPage() {
   const {
     cart: { cartItems },
   } = state;
+
+  const router = useRouter();
 
    function removeItemHandler(item) {
     dispatch({ type: "REMOVE_ITEM", payload: item });
@@ -56,7 +58,7 @@ function CartPage() {
             <p className="text-gray-600 text-md">
               Total Price: <span className="font-semibold">${cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0)}</span>
             </p>
-            <button className="mt-4 w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition" onClick={()=>rouer.push('login?redirect=/shipping')}>
+            <button className="mt-4 w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition" onClick={()=>router.push('login?redirect=/shipping')}>
               Proceed to Checkout
             </button>
           </div>
@@ -67,4 +69,3 @@ function CartPage() {
 }
 
 export default  dynamic(()=>Promise.resolve(CartPage),{ssr:false });
-

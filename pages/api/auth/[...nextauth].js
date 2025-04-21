@@ -3,7 +3,7 @@ import NextAuth from 'next-auth/next'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 import db from '../../../utils/db'
-import User from '../../../models/user'
+import User from '../../../models/User'
 
 export default NextAuth({
   session: {
