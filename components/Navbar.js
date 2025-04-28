@@ -2,10 +2,10 @@
 
 import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
-import { Menu as LucideMenu, X } from "lucide-react"; // Lucide icons
+import { Menu as LucideMenu, X, Loader2 } from "lucide-react"; // Added Loader2 icon
 import { CartContext } from "../context/Cart";
-import { useSession } from "next-auth/react";
-import { Menu as HeadlessMenu, Transition } from "@headlessui/react"; // Headless UI
+import { useSession, signOut } from "next-auth/react";
+import { Menu as HeadlessMenu } from "@headlessui/react"; // Headless UI
 import DropDown from "./DropDown";
 
 // LinkBox component
@@ -29,6 +29,11 @@ export default function Navbar() {
   useEffect(() => {
     setItems(cartItems);
   }, [cartItems]);
+
+  // Sign-out function
+  const logoutHandler = () => {
+    signOut({ callbackUrl: '/login' }); // This will redirect to /login after signing out
+  };
 
   return (
     <header className="bg-gray-100 text-gray-900 shadow-lg border-b border-gray-300">
@@ -57,51 +62,45 @@ export default function Navbar() {
 
           {/* User Session */}
           {status === "loading" ? (
-            <LinkBox>Loading...</LinkBox>
+            <div className="flex items-center justify-center">
+              <Loader2 size={24} className="animate-spin text-gray-700" />
+            </div>
           ) : session?.user ? (
             <HeadlessMenu as="div" className="relative inline-block text-left">
               <HeadlessMenu.Button className="p-2 text-gray-700 hover:text-gray-500 transition">
                 {session.user.name}
               </HeadlessMenu.Button>
 
-              <Transition
-                as="div"
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                <HeadlessMenu.Items className="absolute right-0 mt-2 w-48 origin-top-right bg-white border border-gray-200 rounded-xl shadow-lg focus:outline-none">
-                  <div className="py-2">
-                    <HeadlessMenu.Item>
-                      {({ active }) => (
-                        <DropDown
-                          href="/profile"
-                          className={`block px-4 py-2 text-sm ${
-                            active ? "bg-gray-100 text-gray-700" : "text-gray-700"
-                          }`}
-                        >
-                          Profile
-                        </DropDown>
-                      )}
-                    </HeadlessMenu.Item>
-                    <HeadlessMenu.Item>
-                      {({ active }) => (
-                        <DropDown
-                          href="/logout"
-                          className={`block px-4 py-2 text-sm ${
-                            active ? "bg-gray-100 text-gray-700" : "text-gray-700"
-                          }`}
-                        >
-                          Logout
-                        </DropDown>
-                      )}
-                    </HeadlessMenu.Item>
-                  </div>
-                </HeadlessMenu.Items>
-              </Transition>
+              {/* Dropdown menu */}
+              <div className="absolute right-0 mt-2 w-48 origin-top-right bg-white border border-gray-200 rounded-xl shadow-lg focus:outline-none">
+                <div className="py-2">
+                  <HeadlessMenu.Item>
+                    {({ active }) => (
+                      <DropDown
+                        href="/profile"
+                        className={`block px-4 py-2 text-sm ${
+                          active ? "bg-gray-100 text-gray-700" : "text-gray-700"
+                        }`}
+                      >
+                        Profile
+                      </DropDown>
+                    )}
+                  </HeadlessMenu.Item>
+                  <HeadlessMenu.Item>
+                    {({ active }) => (
+                      <a
+                        href="#"
+                        onClick={logoutHandler} // Attach the logout handler here
+                        className={`block px-4 py-2 text-sm ${
+                          active ? "bg-gray-100 text-gray-700" : "text-gray-700"
+                        }`}
+                      >
+                        Logout
+                      </a>
+                    )}
+                  </HeadlessMenu.Item>
+                </div>
+              </div>
             </HeadlessMenu>
           ) : (
             <Link
