@@ -21,13 +21,10 @@ function Product({ item, hasRedirect = false }) {
     }
 
     dispatch({ type: "ADD_TO_CART", payload: { ...item, qty } });
-    router.push('/cart')
-    if (hasRedirect) {
+     if (hasRedirect) {
       router.push("/cart");
     }
   }
-
- 
 
   return (
     <div className="max-w-sm bg-gray-100 text-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-300">
