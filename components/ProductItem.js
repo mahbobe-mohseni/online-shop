@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
 import db from "@/utils/db";
-import Product from "@/models/product"; // This is your MongoDB model
-import ProductItem from "@/components/ProductItem"; // Renamed component to avoid conflict
+import Product from "@/models/product"; // MongoDB model
+import ProductItem from "@/components/ProductItem"; // Avoid naming conflict
 
 function ProductPage({ product }) {
   if (!product) {
@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      product: product ? db.converToObj(product) : null, // Note: "converToObj", not "convert"
+      product: product ? db.convertToObj(product) : null, // Correct function call here
     },
   };
 }

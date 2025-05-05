@@ -12,4 +12,4 @@ async function handler(req, res) {
   res.send({ message: 'user added.' })
 }
 
-export default handler
+export default handler 
