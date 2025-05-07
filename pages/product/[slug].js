@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      product: product ? db.converToObj(product) : null, // Note: "converToObj", not "convert"
+      product: product ? db.convertToObj(product) : null, // Note: "converToObj", not "convert"
     },
   };
 }

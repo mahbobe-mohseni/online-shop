@@ -2,10 +2,12 @@
 
 import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
+
 import { Menu as LucideMenu, X, Loader2 } from "lucide-react"; // Added Loader2 icon
 import { CartContext } from "../context/Cart";
 import { useSession, signOut } from "next-auth/react";
 import { Menu as HeadlessMenu } from "@headlessui/react"; // Headless UI
+import { ToastContainer } from "react-toastify";
 import DropDown from "./DropDown";
 
 // LinkBox component

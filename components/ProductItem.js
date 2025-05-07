@@ -1,33 +1,63 @@
+import Link from "next/link";
+import { useContext } from "react";
+import { CartContext } from "../context/Cart";
 import { useRouter } from "next/router";
-import Layout from "@/components/Layout";
-import db from "@/utils/db";
-import Product from "@/models/product"; // MongoDB model
-import ProductItem from "@/components/ProductItem"; // Avoid naming conflict
+import{toast} from 'react-toastify'
 
-function ProductPage({ product }) {
-  if (!product) {
-    return <div>Product not found</div>;
+
+function Product({ item, hasRedirect = false }) {
+  const { state, dispatch } = useContext(CartContext);
+  const router = useRouter();
+
+  function addToCartHandler() {
+    const existingItem = state.cart.cartItems.find(
+      (cartItem) => cartItem.slug === item.slug
+    );
+
+    const qty = existingItem ? existingItem.qty + 1 : 1;
+
+    if (item.count < qty) {
+      alert("Product is out.");
+
+      return;
+    }
+
+    dispatch({ type: "ADD_TO_CART", payload: { ...item, qty } });
+     if (hasRedirect) {
+      router.push("/cart");
+    }
+    toast.success('product added')
   }
 
   return (
-    <Layout title={product.title}>
-      <ProductItem item={product} hasRedirect={true} />
-    </Layout>
+    <div className="max-w-sm bg-gray-100 text-gray-900 rounded-xl overflow-hidden shadow-lg border border-gray-300">
+      <Link href={`/product/${item.slug}`}>
+        <img
+          className="w-full rounded-t-xl"
+          src={item.image}
+          alt={item.title}
+        />
+      </Link>
+      <div className="p-5">
+        <Link href={`/product/${item.slug}`}>
+          <h2 className="text-xl font-bold mb-2">{item.title}</h2>
+        </Link>
+        <p className="text-gray-600 text-base mb-4">{item.description}</p>
+        <p className="text-lg font-semibold text-gray-700 mb-4">
+          ${item.price}
+        </p>
+        <div className="mb-2 font-bold ">
+          {item.count > 0 ? "Available" : "unavailable"}
+        </div>
+        <button
+          onClick={addToCartHandler}
+          className="w-full bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
   );
 }
 
-export default ProductPage;
-
-export async function getServerSideProps(context) {
-  const { params } = context;
-  const { slug } = params;
-
-  await db.connect();
-  const product = await Product.findOne({ slug }).lean();
-
-  return {
-    props: {
-      product: product ? db.convertToObj(product) : null, // Correct function call here
-    },
-  };
-}
+export default Product;

@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Navbar from "./Navbar";
-
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 import { Footer } from "./Footer";
 function Layout({ title, children }) {
@@ -10,6 +11,7 @@ function Layout({ title, children }) {
       <Head>
         <title>{`${title} - Shopping`}</title>
       </Head>
+      <ToastContainer position="bottom-center" limit={1}></ToastContainer>
 
       <div className="flex min-h-screen flex-col justify-between">
         {/* Navbar (Client Component) */}
