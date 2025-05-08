@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
 import { useForm } from 'react-hook-form'
 
-import { Store } from '../context/Cart'
+import { CartContext } from '../context/Cart'
 
 import Layout from '../components/Layout'
 import CheckoutWizard from '../components/CheckoutWizard'
@@ -11,7 +11,7 @@ import CheckoutWizard from '../components/CheckoutWizard'
 function Shipping() {
   const { handleSubmit, setValue, register } = useForm()
 
-  const { state, dispatch } = useContext(Store)
+  const { state, dispatch } = useContext(CartContext)
 
   const { cart } = state
   const { shippingData } = cart
