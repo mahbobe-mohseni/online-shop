@@ -2,13 +2,13 @@ import { useRouter } from 'next/router'
 import { useState, useContext } from 'react'
 import Cookies from 'js-cookie'
 
-import { Store } from '../context/Cart'
+import { CartContext } from '../context/Cart'
 
 import Layout from '../components/Layout'
 import CheckoutWizard from '../components/CheckoutWizard'
 
 function PaymentPage() {
-  const { state, dispatch } = useContext(Store)
+  const { state, dispatch } = useContext(CartContext)
 
   const { cart } = state
   const { paymentMethod } = cart
