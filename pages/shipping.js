@@ -28,6 +28,9 @@ function Shipping() {
   ])
 
   const router = useRouter()
+const query=router.query
+console.log(query)
+
 
   function submitHandler({ name, address, postalCode }) {
     dispatch({
@@ -51,7 +54,7 @@ function Shipping() {
   }
 
   return (
-    <Layout title='Shipping'>
+    <Layout title='shipping'>
       <CheckoutWizard activeStep={1} />
       <form
         className='mx-auto max-w-screen-md'

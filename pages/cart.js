@@ -58,7 +58,7 @@ function CartPage() {
             <p className="text-gray-600 text-md">
               Total Price: <span className="font-semibold">${cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0)}</span>
             </p>
-            <button className="mt-4 w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition" onClick={()=>router.push('login?redirect=/shipping')}>
+            <button className="mt-4 w-full py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition" onClick={()=>router.push('/shipping?test=test')}>
               Proceed to Checkout
             </button>
           </div>

@@ -11,7 +11,7 @@ function Layout({ title, children }) {
       <Head>
         <title>{`${title} - Shopping`}</title>
       </Head>
-      <ToastContainer position="bottom-center" limit={1}></ToastContainer>
+      <ToastContainer position="bottom-center" limit={100}></ToastContainer>
 
       <div className="flex min-h-screen flex-col justify-between">
         {/* Navbar (Client Component) */}
