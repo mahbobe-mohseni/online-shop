@@ -13,7 +13,7 @@ function PaymentPage() {
   const { cart } = state;
   const { paymentMethod } = cart;
 
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(paymentMethod);
 
   const router = useRouter();
 

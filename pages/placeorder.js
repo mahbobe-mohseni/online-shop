@@ -24,8 +24,8 @@ function PlaceOrderPage() {
 
   useEffect(() => {
     setItems(cartItems);
-    // const qt = cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0);
-    // setQty(qt)
+    const qt = cartItems.reduce((acc, cur) => acc + cur.qty * cur.price, 0);
+    setQty(qt);
   }, [cartItems]);
 
   async function placeOrderHandler() {
@@ -42,7 +42,7 @@ function PlaceOrderPage() {
       headers: { "Content-Type": "application/json" },
     });
 
-    router.push("/order-completed");
+    router.push("/order-history");
   }
 
   return (
@@ -87,7 +87,7 @@ function PlaceOrderPage() {
                   <tr key={item._id} className="border-b">
                     <td>
                       <div className="flex items-center">
-                        <Image src={item.image} width={50} height={50} />
+                        <Image src={item.image} width={50} height={50} alt="" />
                         &nbsp;
                         {item.title}
                       </div>

@@ -3,12 +3,11 @@
 import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 
-import { Menu as LucideMenu, X, Loader2 } from "lucide-react"; // Added Loader2 icon
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { CartContext } from "../context/Cart";
 import { useSession, signOut } from "next-auth/react";
-import { Menu as HeadlessMenu } from "@headlessui/react"; // Headless UI
-import { ToastContainer } from "react-toastify";
 import DropDown from "./DropDown";
+import { Loader2 } from "lucide-react";
 
 // LinkBox component
 export function LinkBox({ children }) {
@@ -34,7 +33,7 @@ export default function Navbar() {
 
   // Sign-out function
   const logoutHandler = () => {
-    signOut({ callbackUrl: '/login' }); // This will redirect to /login after signing out
+    signOut({ callbackUrl: "/login" }); // This will redirect to /login after signing out
   };
 
   return (
@@ -68,42 +67,30 @@ export default function Navbar() {
               <Loader2 size={24} className="animate-spin text-gray-700" />
             </div>
           ) : session?.user ? (
-            <HeadlessMenu as="div" className="relative inline-block text-left">
-              <HeadlessMenu.Button className="p-2 text-gray-700 hover:text-gray-500 transition">
-                {session.user.name}
-              </HeadlessMenu.Button>
+            <Menu as={"div"} className="relative">
+              <MenuButton
+                as={"div"}
+                className="bg-gray-200 text-gray-700 rounded-lg py-1 px-3 cursor-pointer"
+              >
+                {session?.user?.name}
+              </MenuButton>
+              <MenuItems className="absolute top-10 rounded-lg shadow-lg -right-4 p-4 w-max bg-white border border-gray-100 flex flex-col gap-3">
+                <MenuItem
+                  as={"div"}
+                  className="cursor-pointer text-gray-700 hover:text-blue-500"
+                >
+                  <Link href={"/dashboard"}>Dashboard</Link>
+                </MenuItem>
 
-              {/* Dropdown menu */}
-              <div className="absolute right-0 mt-2 w-48 origin-top-right bg-white border border-gray-200 rounded-xl shadow-lg focus:outline-none">
-                <div className="py-2">
-                  <HeadlessMenu.Item>
-                    {({ active }) => (
-                      <DropDown
-                        href="/profile"
-                        className={`block px-4 py-2 text-sm ${
-                          active ? "bg-gray-100 text-gray-700" : "text-gray-700"
-                        }`}
-                      >
-                        Profile
-                      </DropDown>
-                    )}
-                  </HeadlessMenu.Item>
-                  <HeadlessMenu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        onClick={logoutHandler} // Attach the logout handler here
-                        className={`block px-4 py-2 text-sm ${
-                          active ? "bg-gray-100 text-gray-700" : "text-gray-700"
-                        }`}
-                      >
-                        Logout
-                      </a>
-                    )}
-                  </HeadlessMenu.Item>
-                </div>
-              </div>
-            </HeadlessMenu>
+                <MenuItem
+                  as={"div"}
+                  className="cursor-pointer text-red-400 hover:text-red-600"
+                  onClick={logoutHandler}
+                >
+                  logout
+                </MenuItem>
+              </MenuItems>
+            </Menu>
           ) : (
             <Link
               href="/login"
@@ -115,7 +102,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Button */}
-        <button
+        {/* <button
           className="md:hidden"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
@@ -125,11 +112,11 @@ export default function Navbar() {
           ) : (
             <LucideMenu size={28} className="text-gray-900" />
           )}
-        </button>
+        </button> */}
       </nav>
 
       {/* Mobile Menu */}
-      {isOpen && (
+      {/* {isOpen && (
         <div className="md:hidden bg-gray-200 text-center p-4 space-y-4 border-t border-gray-300">
           <Link
             href="/cart"
@@ -144,7 +131,7 @@ export default function Navbar() {
             Login
           </Link>
         </div>
-      )}
+      )} */}
     </header>
   );
 }
